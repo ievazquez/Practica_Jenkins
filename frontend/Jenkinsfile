@@ -9,7 +9,7 @@ pipeline {
     stages {
       stage('install') {
         steps {
-          git branch: 'develop', url: 'https://github.com/ievazquez/Practica_Jenkins.git'
+          git branch: 'development', url: 'https://github.com/ievazquez/Practica_Jenkins.git'
            dir('frontend') {
              echo 'npm install'
            }
