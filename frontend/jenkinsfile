@@ -11,7 +11,7 @@ pipeline {
       steps {
         git branch: 'develop', url: 'https://github.com/ievazquez/Practica_Jenkins.git'
         dir('frontend') {
-          sh 'npm install'
+          echo 'npm install'
         }
       }
     }
