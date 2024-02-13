@@ -7,7 +7,7 @@ pipeline {
          string(name: 'container_port', defaultValue:'80',           description:'Puerto que usa el contenedor')   
     }
     stages {
-      stage('install') {
+      stage('Git Hub checkout') {
         steps {
           git branch: 'development', url: 'https://github.com/ievazquez/Practica_Jenkins.git'
            dir('frontend') {
@@ -16,7 +16,7 @@ pipeline {
         }
     }
 
-    stage('build') {
+    stage('Build Docker Image') {
       steps {
         dir('frontend') {
           script {
@@ -34,7 +34,7 @@ pipeline {
       }
     }
         
-    stage('deploy') {
+    stage('Running') {
       steps {
         sh 'docker run -d -p ${container_port}:80 --name ${container_name} ${image_name}:${tag_image}'
       }
