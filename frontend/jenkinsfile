@@ -7,13 +7,13 @@ pipeline {
          string(name: 'container_port', defaultValue:80,           description:'Puerto que usa el contenedor')   
     }
     stages {
-    stage('install') {
-      steps {
-        git branch: 'develop', url: 'https://github.com/ievazquez/Practica_Jenkins.git'
-        dir('frontend') {
-          echo 'npm install'
+      stage('install') {
+        steps {
+          git branch: 'develop', url: 'https://github.com/ievazquez/Practica_Jenkins.git'
+           dir('frontend') {
+             echo 'npm install'
+           }
         }
-      }
     }
 
     stage('build') {
@@ -34,7 +34,7 @@ pipeline {
       }
     }
 
-     stage('Test') { 
+    stage('Test') { 
             steps {
                 echo 'Testing....' 
             }
