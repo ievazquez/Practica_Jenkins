@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+    parameters {
+         string(name: 'container_name', defaultValue: 'pagina_web', description:'Nombre del contenedor')
+         string(name: 'image_name',     defaultValue:'pagina_img', description:'Nombrbe de la imagen de docker')
+         string(name: 'tag_name',       defaultValue:'lts',        description:'Tag de la imagen de la página')
+         string(name: 'container_port', defaultValue:80,           description:'Puerto que usa el contenedor')   
+    }
+    stages {
+      stage('install') {
+        steps {
+          git branch: 'develop', url: 'https://github.com/ievazquez/Practica_Jenkins.git'
+           dir('frontend') {
+             echo 'npm install'
+           }
+        }
+    }
+
+    stage('build') {
+      steps {
+        dir('frontend') {
+          script {
+            try {
+              sh 'docker stop ${container_name}'
+              sh 'docker rm ${container_name}'
+              sh 'docker rmi ${image_name}:${tag_image}'
+            } catch (Exception e) {
+              echo 'Exception occurred: ' + e.toString()
+            }
+          }
+          echo 'npm run build'
+          sh 'docker build -t ${image_name}:${tag_image} .'
+        }
+      }
+    }
+
+    stage('Test') { 
+            steps {
+                echo 'Testing....' 
+            }
+        }
+    }
+}
